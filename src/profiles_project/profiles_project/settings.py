@@ -126,3 +126,5 @@ STATIC_URL = '/static/'
 
 # Tells django to use the custom user model
 AUTH_USER_MODEL = "profiles_api.UserProfile"
+
+DEBUG="on"
