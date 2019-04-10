@@ -20,12 +20,12 @@ class UserProfileManager(BaseUserManager):
         # normalizing email address -> converts all chars to lowercase
         email = self.normalize_email(email)
         user = self.model(email=email, name=name)
-        user.ser_password(password)
+        user.set_password(password)
         
         user.save(using=self.db)
         return user
 
-    def create_super_user(self, email, name, password):
+    def create_superuser(self, email, name, password):
         """
             creates and saves a superuser with given details
         """

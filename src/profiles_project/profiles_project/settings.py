@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Added apps that we need in our project
     'rest_framework',
     'rest_framework.authtoken',
     'profiles_api',
