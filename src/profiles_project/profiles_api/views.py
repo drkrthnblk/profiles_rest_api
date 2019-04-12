@@ -8,6 +8,11 @@ from rest_framework import filters
 # for permissions
 from rest_framework.authentication import TokenAuthentication
 
+# gives a read onlu satus for non logged in users
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from rest_framework.permissions import IsAuthenticated
+
 # for login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken 
@@ -143,4 +148,13 @@ class LoginViewSet(viewsets.ViewSet):
         """
         return ObtainAuthToken().post(request)
 
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+    """handles reading creating and updating profile feed items"""
+    authentication_classes = (TokenAuthentication, )
+    serializer_class = serializers.ProfileFeedItemSerializer
+    queryset = models.ProfileFeedItem.objects.all()
+    permission_classes = (permmissions.PostOwnStatus, IsAuthenticated,) # IsAuthenticatedOrReadOnly,)
 
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
